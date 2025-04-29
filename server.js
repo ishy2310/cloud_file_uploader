@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path= require('path');
-const pool=require('./db');
+const { Pool } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +16,13 @@ const storage = multer.diskStorage({
 
     }
 })
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,  
+    }
+});
 
 
 
