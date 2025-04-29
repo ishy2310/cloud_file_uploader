@@ -17,6 +17,16 @@ const storage = multer.diskStorage({
     }
 })
 
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, 
+  }
+});
+
+  
+
 
 const upload =multer({storage:storage});
 
