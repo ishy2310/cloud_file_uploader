@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud File Uploader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Upload a File</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required />
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Uploaded Files</h2>
+    <ul id="file-list"></ul>
+
+    <script>
+    async function fetchFiles() {
+      const res = await fetch('/files');
+      const files = await res.json();
+      const list = document.getElementById('file-list');
+      list.innerHTML = '';
+
+      files.forEach(file => {
+        const li = document.createElement('li');
+        li.textContent = `${file.original_name} (${(file.size / 1024).toFixed(2)} KB)`;
+        list.appendChild(li);
+      });
+    }
+
+    fetchFiles();
+
+    </script>
+
+    
+    
+</body>
+</html>
